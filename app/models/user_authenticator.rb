@@ -6,7 +6,7 @@ class UserAuthenticator
   end
 
   find_user do |params|
-    params.permit!
+    params.permit! if params.respond_to?(:permit!)
     identity = Identity.find_by params.slice(:uid, :provider).merge(identifiable_type: 'User')
     identity.try(:identifiable)
   end

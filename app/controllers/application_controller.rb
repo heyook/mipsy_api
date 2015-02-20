@@ -1,9 +1,11 @@
-class ApplicationController < ActionController::API
-  # protect_from_forgery with: :null_session
+require "application_responder"
 
-  # protect_from_forgery \
-  #   with: :null_session,
-  #   if: -> (c) { c.request.format == 'application/vnd.heyook.v1' }
+class ApplicationController < ActionController::API
+  self.responder = ApplicationResponder
+  respond_to :json
+
+  include ActionController::ImplicitRender
+  include ActionController::HttpAuthentication::Token::ControllerMethods
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 

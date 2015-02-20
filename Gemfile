@@ -3,15 +3,17 @@ source 'https://rubygems.org'
 gem 'dotenv-rails'
 
 gem 'rails', '4.2.0'
-
 gem 'rails-api'
 
 gem 'spring', :group => :development
 
 gem 'pg'
 
+gem 'rack-cors', require: 'rack/cors'
+
 # serializer
-gem 'active_model_serializers'
+gem 'active_model_serializers', github: "rails-api/active_model_serializers", branch: "0-8-stable"
+gem 'responders', '~> 2.0'
 
 gem 'devise'
 gem 'oauth2'
