@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
       namespace :users do
         resources :oauths, only: [:create]
+        resource :account
       end
     end
   end
