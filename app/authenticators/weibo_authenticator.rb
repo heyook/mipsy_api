@@ -16,6 +16,7 @@ class WeiboAuthenticator
       provider: "weibo",
       uid: uid,
       info: user_info,
+      access_token: access_token.token,
       extra: { raw_info: raw_info }
     }
   end

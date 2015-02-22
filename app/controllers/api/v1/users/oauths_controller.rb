@@ -2,18 +2,20 @@ module Api
   module V1
     class Users::OauthsController < Api::V1::BaseController
       skip_before_action :verify_authenticity_token
+      before_action :find_oauth_info, only: [:create]
 
       def create
         begin
-          oauth_info = find_oauth_info
-          oauth_hash = ActiveSupport::HashWithIndifferentAccess.new(oauth_info)
+          oauth_hash = ActiveSupport::HashWithIndifferentAccess.new(@oauth_info)
           user       = UserAuthenticator.new.(oauth_hash)
-          is_valid   = user.valid?
-          user.renew_api_key if is_valid
+          if user.valid?
+            user.renew_api_key
+            # user.update_access_token
+          end 
 
           respond_with user.reload,
             location: nil,
-            scope: is_valid,
+            scope: true,
             serializer: UserSerializer
 
         rescue SimpleMobileOauth::Authenticator::BaseError => e
@@ -25,7 +27,8 @@ module Api
 
       def find_oauth_info
         info = auth_class.new(oauth_params[:code]).oauth_info
-        {
+        @access_token = info[:access_token]
+        @oauth_info   = {
           auth: info,
           user: {
             username: info[:info][:nickname],
