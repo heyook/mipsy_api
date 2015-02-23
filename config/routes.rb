@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         resources :oauths, only: [:create]
         resource :account
         resources :articles
+        resources :reposts
       end
     end
   end

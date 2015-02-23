@@ -26,3 +26,8 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+key = ENV["WEIBO_KEY"], secret = ENV["WEIBO_SECRET"]
+access_token = Identity.first.access_token
+wa = WeiboApi.new key,secret,access_token
+wa.get_status(Repost.last.ref_id)

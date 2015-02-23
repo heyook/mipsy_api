@@ -21,3 +21,5 @@
 
 en:
   hello: "Hello world"
+  weibo:
+    invalid_access_token: "Invalid Access Token"

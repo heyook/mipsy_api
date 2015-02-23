@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222060357) do
+ActiveRecord::Schema.define(version: 20150223052357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20150222060357) do
 
   add_index "api_keys", ["access_token"], name: "index_api_keys_on_access_token", unique: true, using: :btree
 
+  create_table "articles", force: :cascade do |t|
+    t.string   "title"
+    t.string   "link"
+    t.string   "image_url"
+    t.string   "ref_id"
+    t.string   "ref_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "identities", force: :cascade do |t|
     t.integer  "identifiable_id"
     t.string   "identifiable_type"
@@ -37,6 +47,20 @@ ActiveRecord::Schema.define(version: 20150222060357) do
     t.datetime "updated_at"
     t.string   "access_token"
   end
+
+  create_table "reposts", force: :cascade do |t|
+    t.integer  "article_id"
+    t.string   "ref_id"
+    t.string   "ref_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "title"
+    t.integer  "user_id"
+    t.text     "info"
+  end
+
+  add_index "reposts", ["article_id"], name: "index_reposts_on_article_id", using: :btree
+  add_index "reposts", ["user_id"], name: "index_reposts_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email"

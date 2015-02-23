@@ -13,5 +13,10 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
   has_many :identities, as: :identifiable
+  has_many :reposts
+
+  def weibo_identity
+    identities.find_by provider: "weibo"
+  end
 
 end
